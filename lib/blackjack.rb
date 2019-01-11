@@ -14,26 +14,16 @@ def display_card_total(card_total)
   puts "Your cards add up to #{card_total}"
 end
 
-def prompt_user(card_total)
+def prompt_user
   # code #prompt_user here
   puts "Type 'h' to hit or 's' to stay"
-  get_user_input(card_total)
+  #get_user_input(card_total)
 end
 
-def get_user_input(card_total)
+def get_user_input
   # code #get_user_input here
-  user_input = gets.strip
-  if user_input == "h" || user_input == "H"
-    hit?(card_total)
-  elsif user_input == "s" || user_input =="S"
-    if card_total < 21
-      puts "Well done you WON!!"
-    else
-  end_game(card_total)
-end
-  else
-    invalid_command
-  end
+  user_input = gets.chomp
+
 end
 
 def end_game(card_total)
@@ -44,24 +34,21 @@ end
 
 def initial_round
   # code #initial_round here
-  card_total = deal_card
-  card_total += deal_card
-  display_card_total(card_total)
-  prompt_user(card_total)
-
-
-#
-
- end
+card_total = (deal_card + deal_card)
+display_card_total(card_total)
+card_total
+end
 
 def hit?(card_total)
+  prompt_user
+  user_input = get_user_input
+  if user_input == "h" || user_input == "H"
   card_total += deal_card
-  # code hit? here
-  display_card_total(card_total)
-  if card_total >21
-  end_game(card_total)
+  card_total
+elsif user_input == "s" || user_input == "S"
+card_total
 else
-  prompt_user(card_total)
+  invalid_command
 end
 
 end
@@ -79,5 +66,11 @@ end
 
 def runner
   # code runner here
-
+welcome
+card_total = initial_round
+until card_total > 21
+card_total = hit?(card_total)
+end
+display_card_total(card_total)
+end_game(card_total)
 end
